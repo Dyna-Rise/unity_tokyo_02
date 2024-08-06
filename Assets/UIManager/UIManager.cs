@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -33,25 +34,25 @@ public class UIManager : MonoBehaviour
         //矢
         if (hasArrows != ItemKeeper.hasArrows)
         {
-            arrowText.GetComponent<Text>().text = ItemKeeper.hasArrows.ToString();
+            arrowText.GetComponent<TextMeshProUGUI>().text = ItemKeeper.hasArrows.ToString();
             hasArrows = ItemKeeper.hasArrows;
         }
         //銀のカギ
         if (hasSilverKeys != ItemKeeper.hasSilverKeys)
         {
-            SilverKeyText.GetComponent<Text>().text = ItemKeeper.hasSilverKeys.ToString();
+            SilverKeyText.GetComponent<TextMeshProUGUI>().text = ItemKeeper.hasSilverKeys.ToString();
             hasSilverKeys = ItemKeeper.hasSilverKeys;
         }
         //金のカギ
         if (hasGoldKeys != ItemKeeper.hasGoldKeys)
         {
-            GoldKeyText.GetComponent<Text>().text = ItemKeeper.hasGoldKeys.ToString();
+            GoldKeyText.GetComponent<TextMeshProUGUI>().text = ItemKeeper.hasGoldKeys.ToString();
             hasGoldKeys = ItemKeeper.hasGoldKeys;
         }
         //ライト
         if (hasLights != ItemKeeper.hasLights)
         {
-            lightText.GetComponent<Text>().text = ItemKeeper.hasLights.ToString();
+            lightText.GetComponent<TextMeshProUGUI>().text = ItemKeeper.hasLights.ToString();
             hasLights = ItemKeeper.hasLights;
         }
     }
@@ -100,9 +101,8 @@ public class UIManager : MonoBehaviour
     public void Retry()
     {
         //HPを戻す
-        PlayerController.hp = 3;
-        //BGMをクリア
-        SoundManager.playingBGM = BGMType.None;
+        //PlayerController.hp = 3;
+
         //ゲーム中に戻す
         SceneManager.LoadScene(retrySceneName);   //シーン移動
     }

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rbody;              //Rigidbody2D
     Animator animator;              //Animator
     bool isMoving = false;          //移動中フラグ
+
     // ダメージ対応
     public static int hp = 3;       //プレイヤーのHP
     public static string gameState; //ゲームの状態
@@ -45,25 +46,32 @@ public class PlayerController : MonoBehaviour
     {
         rbody = GetComponent<Rigidbody2D>();    //Rigidbody2Dを得る
         animator = GetComponent<Animator>();    //Animatorを得る
+        
+        
         // ゲームの状態をプレイ中にする
-        gameState = "playing";
-        // HPの更新
-        hp = PlayerPrefs.GetInt("PlayerHP");
+        //gameState = "playing";
+
+        // 自動セーブからHPを読み取って更新
+        //hp = PlayerPrefs.GetInt("PlayerHP");
     }
 
     // Update is called once per frame
     void Update()
     {
         // ゲーム中以外とダメージ中は何もしない
-        if (gameState != "playing" || inDamage)
-        {
-            return;
-        }
+        //if (gameState != "playing" || inDamage)
+        //{
+        //    return;
+        //}
+
+
         if (isMoving == false)
         {
             axisH = Input.GetAxisRaw("Horizontal"); //左右キー入力
             axisV = Input.GetAxisRaw("Vertical");   //上下キー入力
         }
+
+
         // キー入力から移動角度を求める
         Vector2 fromPt = transform.position;
         Vector2 toPt = new Vector2(fromPt.x + axisH, fromPt.y + axisV);
@@ -100,26 +108,28 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // ゲーム中以外は何もしない
-        if (gameState != "playing")
-        {
-            return;
-        }
-        if (inDamage)
-        {
-            // ダメージ中点滅させる
-            float val = Mathf.Sin(Time.time * 50);
-            if (val > 0)
-            {
-                // スプライトを表示
-                gameObject.GetComponent<SpriteRenderer>().enabled = true;
-            }
-            else
-            {
-                // スプライトを非表示
-                gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            }
-            return; // ダメージ中は操作による移動させない
-        }
+        //if (gameState != "playing")
+        //{
+        //    return;
+        //}
+
+        //ダメージ中の処理
+        //if (inDamage)
+        //{
+            //float val = Mathf.Sin(Time.time * 50);　// ダメージ中点滅させる
+
+            //if (val > 0)
+            //{   
+            //    gameObject.GetComponent<SpriteRenderer>().enabled = true;　// スプライトを表示
+            //}
+            //else
+            //{
+            //    gameObject.GetComponent<SpriteRenderer>().enabled = false;　// スプライトを非表示
+            //}
+            //return; // ダメージ中は操作による移動させない
+        //}
+
+
         // 移動速度を更新する
         rbody.velocity = new Vector2(axisH, axisV).normalized * speed;
     }
@@ -139,60 +149,64 @@ public class PlayerController : MonoBehaviour
     }
 
     // 接触
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            GetDamage(collision.gameObject);
-        }
-    }
+    //void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Enemy")
+    //    {
+    //        GetDamage(collision.gameObject);
+    //    }
+    //}
 
-    // ダメージ
-    void GetDamage(GameObject enemy)
-    {
-        if (gameState == "playing")
-        {
-            hp--; // HP を減らす
-            // HPの更新
-            PlayerPrefs.SetInt("PlayerHP", hp);
-            if (hp > 0)
-            {
-                // 移動停止
-                rbody.velocity = new Vector2(0, 0);
-                // 敵キャラの反対方向にヒットバックさせる
-                Vector3 v = (transform.position - enemy.transform.position).normalized;
-                rbody.AddForce(new Vector2(v.x * 4, v.y * 4), ForceMode2D.Impulse);
-                // ダメージフラグ ON
-                inDamage = true;
-                Invoke("DamageEnd", 0.25f);
-            }
-            else
-            {
-                // ゲームオーバー
-                GameOver();
-            }
-        }
-    }
+
+    // ダメージ演出
+    //void GetDamage(GameObject enemy)
+    //{
+    //    if (gameState == "playing")
+    //    {
+    //        hp--; // HP を減らす
+
+
+    //        //PlayerPrefs.SetInt("PlayerHP", hp);　// HPの自動セーブ
+
+    //        if (hp > 0)
+    //        {
+    //            // 移動停止
+    //            rbody.velocity = new Vector2(0, 0);
+    //            // 敵キャラの反対方向にヒットバックさせる
+    //            Vector3 v = (transform.position - enemy.transform.position).normalized;
+    //            rbody.AddForce(new Vector2(v.x * 4, v.y * 4), ForceMode2D.Impulse);
+    //            // ダメージフラグ ON
+    //            inDamage = true;
+    //            Invoke("DamageEnd", 0.25f);
+    //        }
+    //        else
+    //        {
+    //            // ゲームオーバー
+    //            GameOver();
+    //        }
+    //    }
+    //}
+    
     // ダメージ終了
-    void DamageEnd()
-    {
-        inDamage = false; gameObject.GetComponent<SpriteRenderer>().enabled = true;
-    }
-    // ゲームオーバー
-    void GameOver()
-    {
-        gameState = "gameover";
-        // ゲームオーバー演出
-        GetComponent<CircleCollider2D>().enabled = false;           // プレイヤーあたりを消す
-        rbody.velocity = new Vector2(0, 0);                         // 移動停止
-        rbody.gravityScale = 1;                                     // 重力を戻す
-        rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);     // プレイヤーを上に少し跳ね上げる
-        animator.SetBool("IsDead", true);                           // アニメーションを切り替える
-        Destroy(gameObject, 1.0f);                                  // 1 秒後にプレイヤーを消す
+    //void DamageEnd()
+    //{
+    //    inDamage = false; gameObject.GetComponent<SpriteRenderer>().enabled = true;
+    //}
 
-        // BGM停止
-        SoundManager.soundManager.StopBgm();
-        // SE再生(ゲームオーバー)
-        SoundManager.soundManager.SEPlay(SEType.GameOver);
-    }
+
+    // ゲームオーバー
+    //void GameOver()
+    //{
+    //    gameState = "gameover";
+        
+    //    // ゲームオーバー演出
+    //    GetComponent<CircleCollider2D>().enabled = false;           // プレイヤーあたりを消す
+    //    rbody.velocity = new Vector2(0, 0);                         // 移動停止
+    //    rbody.gravityScale = 1;                                     // 重力を戻す
+    //    rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);     // プレイヤーを上に少し跳ね上げる
+    //    animator.SetBool("IsDead", true);                           // アニメーションを切り替える
+    //    Destroy(gameObject, 1.0f);                                  // 1 秒後にプレイヤーを消す
+
+
+    //}
 }

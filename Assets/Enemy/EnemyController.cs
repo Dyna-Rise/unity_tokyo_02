@@ -111,8 +111,10 @@ public class EnemyController : MonoBehaviour
                 animator.SetBool("IsDead", true);
                 //0.５秒後に消す
                 Destroy(gameObject, 0.5f);
+
+
                 // 配置Idの記録
-                SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
+                //SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
             }
         }
     }

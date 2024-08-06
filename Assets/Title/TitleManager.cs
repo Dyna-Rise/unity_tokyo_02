@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
@@ -13,17 +14,17 @@ public class TitleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string sceneName = PlayerPrefs.GetString("LastScene");      //保存シーン
-        if (sceneName == "")
-        {
-            continueButton.GetComponent<Button>().interactable = false; //無効化
-        }
-        else
-        {
-            continueButton.GetComponent<Button>().interactable = true; //有効化
-        }
-        //タイトルBGM再生
-        SoundManager.soundManager.PlayBgm(BGMType.Title);
+        //コンテニューの機能（セーブデータの続きから行えるようにする）
+        //string sceneName = PlayerPrefs.GetString("LastScene");      //保存シーン
+        //if (sceneName == "")
+        //{
+        //    continueButton.GetComponent<Button>().interactable = false; //無効化
+        //}
+        //else
+        //{
+        //    continueButton.GetComponent<Button>().interactable = true; //有効化
+        //}
+
     }
 
     // Update is called once per frame
@@ -35,20 +36,23 @@ public class TitleManager : MonoBehaviour
     public void StartButtonClicked()
     {
         //セーブデータをクリア
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
+
         //HPを戻す
-        PlayerPrefs.SetInt("PlayerHP", 3);
+        //PlayerPrefs.SetInt("PlayerHP", 3);
+
         //ステージ情報をクリア
-        PlayerPrefs.SetString("LastScene", firstSceneName); //シーン名初期化
-        RoomManager.doorNumber = 0;
+        //PlayerPrefs.SetString("LastScene", firstSceneName); //シーン名初期化
+        //RoomManager.doorNumber = 0;
+
         SceneManager.LoadScene(firstSceneName);
     }
 
     //CONTINUEボタン押し
     public void ContinueButtonClicked()
     {
-        string sceneName = PlayerPrefs.GetString("LastScene");      //保存シーン
-        RoomManager.doorNumber = PlayerPrefs.GetInt("LastDoor");    //ドア番号
-        SceneManager.LoadScene(sceneName);
+        //string sceneName = PlayerPrefs.GetString("LastScene");      //保存シーン
+        //RoomManager.doorNumber = PlayerPrefs.GetInt("LastDoor");    //ドア番号
+        //SceneManager.LoadScene(sceneName);
     }
 }

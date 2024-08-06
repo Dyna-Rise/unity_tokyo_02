@@ -57,8 +57,9 @@ public class ItemData : MonoBehaviour
                 {
                     // HP が 3 以下の場合加算する
                     PlayerController.hp++;
-                    // HPの更新
-                    PlayerPrefs.SetInt("PlayerHP", PlayerController.hp);
+
+                    // HPの更新（状態を自動セーブ）
+                    //PlayerPrefs.SetInt("PlayerHP", PlayerController.hp);
                 }
             }
             else if (type == ItemType.light)
@@ -80,7 +81,7 @@ public class ItemData : MonoBehaviour
             Destroy(gameObject, 0.5f);
 
             // 配置Idの記録
-            SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
+            //SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
         }
     }
 }

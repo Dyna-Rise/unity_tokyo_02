@@ -46,18 +46,8 @@ public class RoomManager : MonoBehaviour
             }
 
         }
-        // シーン名取得
-        string scenename = PlayerPrefs.GetString("LastScene");
-        if (scenename == "BossStage")
-        {
-            // ボス BGM 再生
-            SoundManager.soundManager.PlayBgm(BGMType.InBoss);
-        }
-        else
-        {
-            // ゲーム中 BGM 再生
-            SoundManager.soundManager.PlayBgm(BGMType.InGame);
-        }
+       
+
     }
 
     // Update is called once per frame
@@ -70,14 +60,17 @@ public class RoomManager : MonoBehaviour
     public static void ChangeScene(string scnename, int doornum)
     {
         doorNumber = doornum;               // ドア番号を static 変数に保存
-        string nowScene = PlayerPrefs.GetString("LastScene");
-        if (nowScene != "")
-        {
-            SaveDataManager.SaveArrangeData(nowScene);  //配置データを保存
-        }
-        PlayerPrefs.SetString("LastScene", scnename);   // シーン名を保存
-        PlayerPrefs.SetInt("LastDoor", doornum);        // ドア番号を保存
-        ItemKeeper.SaveItem();                          // アイテムを保存
+        
+        
+        //状態をセーブ
+        //string nowScene = PlayerPrefs.GetString("LastScene");
+        //if (nowScene != "")
+        //{
+        //    SaveDataManager.SaveArrangeData(nowScene);  //配置データを保存
+        //}
+        //PlayerPrefs.SetString("LastScene", scnename);   // シーン名を保存
+        //PlayerPrefs.SetInt("LastDoor", doornum);        // ドア番号を保存
+        //ItemKeeper.SaveItem();                          // アイテムを保存
 
         SceneManager.LoadScene(scnename);   // シーン移動
     }

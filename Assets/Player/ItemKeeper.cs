@@ -12,10 +12,10 @@ public class ItemKeeper : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // アイテムを読み込む
-        hasGoldKeys = PlayerPrefs.GetInt("GoldKeys");
-        hasSilverKeys = PlayerPrefs.GetInt("SilverKeys");
-        hasArrows = PlayerPrefs.GetInt("Arrows");
+        // アイテムをセーブから読み込む
+        //hasGoldKeys = PlayerPrefs.GetInt("GoldKeys");
+        //hasSilverKeys = PlayerPrefs.GetInt("SilverKeys");
+        //hasArrows = PlayerPrefs.GetInt("Arrows");
     }
 
     // Update is called once per frame
@@ -24,11 +24,11 @@ public class ItemKeeper : MonoBehaviour
         
     }
 
-    // アイテムを保存する
+    // アイテムをセーブする
     public static void SaveItem()
     {
-        PlayerPrefs.SetInt("GoldKeys", hasGoldKeys);
-        PlayerPrefs.SetInt("SilverKeys", hasSilverKeys);
-        PlayerPrefs.SetInt("Arrows", hasArrows);
+        //PlayerPrefs.SetInt("GoldKeys", hasGoldKeys);
+        //PlayerPrefs.SetInt("SilverKeys", hasSilverKeys);
+        //PlayerPrefs.SetInt("Arrows", hasArrows);
     }
 }

@@ -33,8 +33,9 @@ public class ItemBox : MonoBehaviour
                 // アイテムをプレハブから作る
                 Instantiate(itemPrefab, transform.position, Quaternion.identity);
             }
+
             // 配置Idの記録
-            SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
+            //SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
         }
     }
 

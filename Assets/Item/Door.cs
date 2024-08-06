@@ -30,8 +30,9 @@ public class Door : MonoBehaviour
                 {
                     ItemKeeper.hasGoldKeys--;       // 金のカギを 1 つ減らす
                     Destroy(this.gameObject);       // ドアを開ける(削除する)
+                    
                     // 配置Idの記録
-                    SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
+                    //SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
                 }
             }
             else
@@ -40,8 +41,9 @@ public class Door : MonoBehaviour
                 {
                     ItemKeeper.hasSilverKeys--;     // 銀のカギを 1 つ減らす
                     Destroy(this.gameObject);       // ドアを開ける(削除する)
+                    
                     // 配置Idの記録
-                    SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
+                    //SaveDataManager.SetArrangeId(arrangeId, gameObject.tag);
                 }
             }
         }

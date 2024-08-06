@@ -36,8 +36,6 @@ public class ArrowShoot : MonoBehaviour
             // 攻撃フラグを下ろす遅延実行
             Invoke("StopAttack", shootDelay);
 
-            // SE再生(矢を射る)
-            SoundManager.soundManager.SEPlay(SEType.Shoot);
         }
     }
 
