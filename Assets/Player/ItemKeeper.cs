@@ -6,7 +6,7 @@ public class ItemKeeper : MonoBehaviour
 {
     public static int hasGoldKeys = 0;      // 金カギの数 
     public static int hasSilverKeys = 0;    // 銀カギの数 
-    public static int hasArrows = 3;        // 矢の数 
+    public static int hasArrows = 100;        // 矢の数 
     public static int hasLights = 10;        // ライトの数
 
     // Start is called before the first frame update

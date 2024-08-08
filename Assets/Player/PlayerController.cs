@@ -46,10 +46,10 @@ public class PlayerController : MonoBehaviour
     {
         rbody = GetComponent<Rigidbody2D>();    //Rigidbody2Dを得る
         animator = GetComponent<Animator>();    //Animatorを得る
-        
-        
+
+
         // ゲームの状態をプレイ中にする
-        //gameState = "playing";
+        gameState = "playing";
 
         // 自動セーブからHPを読み取って更新
         //hp = PlayerPrefs.GetInt("PlayerHP");
@@ -59,10 +59,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // ゲーム中以外とダメージ中は何もしない
-        //if (gameState != "playing" || inDamage)
-        //{
-        //    return;
-        //}
+        if (gameState != "playing" || inDamage)
+        {
+            return;
+        }
 
 
         if (isMoving == false)
@@ -110,26 +110,26 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // ゲーム中以外は何もしない
-        //if (gameState != "playing")
-        //{
-        //    return;
-        //}
+        if (gameState != "playing")
+        {
+            return;
+        }
 
         //ダメージ中の処理
-        //if (inDamage)
-        //{
-            //float val = Mathf.Sin(Time.time * 50);　// ダメージ中点滅させる
+        if (inDamage)
+        {
+            float val = Mathf.Sin(Time.time * 50); // ダメージ中点滅させる
 
-            //if (val > 0)
-            //{   
-            //    gameObject.GetComponent<SpriteRenderer>().enabled = true;　// スプライトを表示
-            //}
-            //else
-            //{
-            //    gameObject.GetComponent<SpriteRenderer>().enabled = false;　// スプライトを非表示
-            //}
-            //return; // ダメージ中は操作による移動させない
-        //}
+            if (val > 0)
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = true; // スプライトを表示
+            }
+            else
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = false; // スプライトを非表示
+            }
+            return; // ダメージ中は操作による移動させない
+        }
 
 
         // 移動速度を更新する
@@ -151,56 +151,63 @@ public class PlayerController : MonoBehaviour
     }
 
     // 接触
-    //void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.tag == "Enemy")
-    //    {
-    //        GetDamage(collision.gameObject);
-    //    }
-    //}
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        //相手がEnemyだったら
+        if (collision.gameObject.tag == "Enemy")
+        {
+            //自作メソッドGetDamageの発動
+            GetDamage(collision.gameObject);
+        }
+    }
 
 
     // ダメージ演出
-    //void GetDamage(GameObject enemy)
-    //{
-    //    if (gameState == "playing")
-    //    {
-    //        hp--; // HP を減らす
+    void GetDamage(GameObject enemy)
+    {
+        if (gameState == "playing")
+        {
+            hp--; // HP を減らす
 
 
-    //        //PlayerPrefs.SetInt("PlayerHP", hp);　// HPの自動セーブ
+            //PlayerPrefs.SetInt("PlayerHP", hp);　// HPの自動セーブ
 
-    //        if (hp > 0)
-    //        {
-    //            // 移動停止
-    //            rbody.velocity = new Vector2(0, 0);
-    //            // 敵キャラの反対方向にヒットバックさせる
-    //            Vector3 v = (transform.position - enemy.transform.position).normalized;
-    //            rbody.AddForce(new Vector2(v.x * 4, v.y * 4), ForceMode2D.Impulse);
-    //            // ダメージフラグ ON
-    //            inDamage = true;
-    //            Invoke("DamageEnd", 0.25f);
-    //        }
-    //        else
-    //        {
-    //            // ゲームオーバー
-    //            GameOver();
-    //        }
-    //    }
-    //}
-    
+            if (hp > 0)
+            {
+                // 移動停止
+                rbody.velocity = new Vector2(0, 0);
+
+                // 敵キャラの反対方向にヒットバックさせる
+                Vector3 v = (transform.position - enemy.transform.position).normalized;
+
+                rbody.AddForce(new Vector2(v.x * 4, v.y * 4), ForceMode2D.Impulse);
+
+                // ダメージフラグ ON
+                inDamage = true;
+
+                //0.25秒後にinDamageをfalseに解除する自作メソッドの発動
+                Invoke("DamageEnd", 0.25f);
+            }
+            else
+            {
+                // 自作メソッド ゲームオーバー
+                //GameOver();
+            }
+        }
+    }
+
     // ダメージ終了
-    //void DamageEnd()
-    //{
-    //    inDamage = false; gameObject.GetComponent<SpriteRenderer>().enabled = true;
-    //}
+    void DamageEnd()
+    {
+        inDamage = false; gameObject.GetComponent<SpriteRenderer>().enabled = true;
+    }
 
 
     // ゲームオーバー
     //void GameOver()
     //{
     //    gameState = "gameover";
-        
+
     //    // ゲームオーバー演出
     //    GetComponent<CircleCollider2D>().enabled = false;           // プレイヤーあたりを消す
     //    rbody.velocity = new Vector2(0, 0);                         // 移動停止
