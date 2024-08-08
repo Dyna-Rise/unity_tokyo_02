@@ -73,8 +73,8 @@ public class PlayerController : MonoBehaviour
 
 
         // キー入力から移動角度を求める
-        Vector2 fromPt = transform.position;
-        Vector2 toPt = new Vector2(fromPt.x + axisH, fromPt.y + axisV);
+        Vector2 fromPt = transform.position; //キー入力に関わらずこれまでのプレイヤーの位置
+        Vector2 toPt = new Vector2(fromPt.x + axisH, fromPt.y + axisV);//キーの入力値（X成分、Y成分）をfromPtに足している
         angleZ = GetAngle(fromPt, toPt);
         // 移動角度から向いている方向とアニメーション更新
         int dir;
@@ -101,7 +101,9 @@ public class PlayerController : MonoBehaviour
         if (dir != direction)
         {
             direction = dir;
-            animator.SetInteger("Direction", direction);
+            //アニメータービューで自作したint型のパラメータ「Direction」の値を切り替える
+            //アニメはDirectionの数字に応じて遷移する
+            animator.SetInteger("Direction", direction);  //Int型のパラメータの値を指定
         }
     }
 
