@@ -216,7 +216,5 @@ public class PlayerController : MonoBehaviour
         rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);     // プレイヤーを上に少し跳ね上げる
         animator.SetBool("IsDead", true);                           // アニメーションを切り替える
         Destroy(gameObject, 1.0f);                                  // 1 秒後にプレイヤーを消す
-
-
     }
 }

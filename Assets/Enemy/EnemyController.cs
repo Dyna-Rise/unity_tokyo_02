@@ -45,12 +45,17 @@ public class EnemyController : MonoBehaviour
             }
             // アニメーションを切り替える
             animator.SetBool("IsActive", isActive);
+
             if (isActive)
             {
                 animator.SetBool("IsActive", isActive);
+
                 // プレイヤーへの角度を求める
-                float dx = player.transform.position.x - transform.position.x; float dy = player.transform.position.y - transform.position.y; float rad = Mathf.Atan2(dy, dx);
+                float dx = player.transform.position.x - transform.position.x;
+                float dy = player.transform.position.y - transform.position.y;
+                float rad = Mathf.Atan2(dy, dx);
                 float angle = rad * Mathf.Rad2Deg;
+
                 // 移動角度でアニメーションを変更する
                 int direction;
                 if (angle > -45.0f && angle <= 45.0f)
@@ -69,7 +74,8 @@ public class EnemyController : MonoBehaviour
                 {
                     direction = 1;    //左向き
                 }
-                animator.SetInteger("Direction", direction);
+                animator.SetInteger("Direction", direction); //ここでアニメ切り替え
+
                 // 移動するベクトルを作る
                 axisH = Mathf.Cos(rad) * speed;
                 axisV = Mathf.Sin(rad) * speed;
@@ -106,7 +112,7 @@ public class EnemyController : MonoBehaviour
                 // 当たりを消す
                 GetComponent<CircleCollider2D>().enabled = false;
                 //移動停止
-                rbody.velocity = Vector2.zero;
+                rbody.velocity = Vector2.zero;　//new Vector2(0,0)
                 //アニメーションを切り替える
                 animator.SetBool("IsDead", true);
                 //0.５秒後に消す
