@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 // 自作メソッド ゲームオーバー
-                //GameOver();
+                GameOver();
             }
         }
     }
@@ -199,23 +199,24 @@ public class PlayerController : MonoBehaviour
     // ダメージ終了
     void DamageEnd()
     {
-        inDamage = false; gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        inDamage = false;
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 
 
     // ゲームオーバー
-    //void GameOver()
-    //{
-    //    gameState = "gameover";
+    void GameOver()
+    {
+        gameState = "gameover";
 
-    //    // ゲームオーバー演出
-    //    GetComponent<CircleCollider2D>().enabled = false;           // プレイヤーあたりを消す
-    //    rbody.velocity = new Vector2(0, 0);                         // 移動停止
-    //    rbody.gravityScale = 1;                                     // 重力を戻す
-    //    rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);     // プレイヤーを上に少し跳ね上げる
-    //    animator.SetBool("IsDead", true);                           // アニメーションを切り替える
-    //    Destroy(gameObject, 1.0f);                                  // 1 秒後にプレイヤーを消す
+        // ゲームオーバー演出
+        GetComponent<CircleCollider2D>().enabled = false;           // プレイヤーあたりを消す
+        rbody.velocity = new Vector2(0, 0);                         // 移動停止
+        rbody.gravityScale = 1;                                     // 重力を戻す
+        rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse);     // プレイヤーを上に少し跳ね上げる
+        animator.SetBool("IsDead", true);                           // アニメーションを切り替える
+        Destroy(gameObject, 1.0f);                                  // 1 秒後にプレイヤーを消す
 
 
-    //}
+    }
 }
