@@ -28,9 +28,11 @@ public class ItemBox : MonoBehaviour
             // 箱が閉まっている状態でプレイヤーに接触
             GetComponent<SpriteRenderer>().sprite = openImage;
             isClosed = false; // 開いてる状態にする
+
             if(itemPrefab != null)
             {
                 // アイテムをプレハブから作る
+                //Instantiate(対象物、誕生位置、回転の様子)を指定して対象物を生み出すメソッド
                 Instantiate(itemPrefab, transform.position, Quaternion.identity);
             }
 
